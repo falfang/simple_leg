@@ -11,12 +11,12 @@
 #pragma once
 
 #include <controller_interface/controller.h>
-#include <ros_control_tutorial/leg_position_interface.h>
+#include <simple_leg_controllers/leg_position_interface.h>
+#include <simple_leg_msgs/leg_command.h>
 #include <pluginlib/class_list_macros.hpp>
-#include <ros_control_tutorial/leg_command.h>
 #include <realtime_tools/realtime_publisher.h>
 
-namespace leg_position_controller{
+namespace simple_leg_controllers{
 
 class LegPositionController : public controller_interface::Controller<hardware_interface::LegPositionInterface>{
 private:
@@ -29,7 +29,7 @@ private:
     };
 
     Command cmd;
-    void setCommandCB(const ros_control_tutorial::leg_commandConstPtr&);
+    void commandCB(const simple_leg_msgs::leg_commandConstPtr&);
 
 public:
     LegPositionController(void);
@@ -43,7 +43,5 @@ public:
     std::string getLegName(void);
     void enforceWorkspaceLimit(Command&){};
 };
-
-
 
 }

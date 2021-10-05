@@ -10,12 +10,13 @@
  */
 #include <ros/ros.h>
 #include <controller_manager/controller_manager.h>
-#include <ros_control_tutorial/simple_leg_hw.h>
+#include <simple_leg_controllers/simple_leg_hw.h>
 
 int main(int argc, char** argv){
     ros::init(argc, argv, "simple_leg");
 
     simple_leg::simple_leg leg;
+
     controller_manager::ControllerManager cm(&leg, leg.nh);
 
     ros::Rate rate(1/leg.getPeriod().toSec());

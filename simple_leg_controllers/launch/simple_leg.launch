@@ -4,6 +4,13 @@
             type: joint_state_controller/JointStateController
             publish_rate: 100
         
-        <!--leg_position_controller:
-            type: -->
+        leg_position_controller:
+            type: simple_leg_controllers/LegPositionController
+            leg: FL
+    </rosparam>
+
+    <node name="simple_leg_control" pkg="simple_leg_controllers" type="simple_leg_control" output="screen"/>
+
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" args="joint_state_controller leg_position_controller"/>
 </launch>

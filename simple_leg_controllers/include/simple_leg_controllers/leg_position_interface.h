@@ -13,34 +13,37 @@
 
 #include <hardware_interface/internal/hardware_resource_manager.h>
 #include <string>
+#include <cassert>
 
 namespace hardware_interface{
 
 class LegPositionHandle{
 private:
-    double *x   = {nullptr};
-    double *z   = {nullptr};
+    double *x_   = {nullptr};
+    double *z_   = {nullptr};
     std::string leg_name;
 
 public:
-    LegPositionHandle(std::string name_, double* x_, double* z_)
-     : leg_name(name_), x(x_), z(z_){
-        if(!x){   throw HardwareInterfaceException("Cannot create handle. command x pointer is null"); *x = 0.0; }
-        if(!z){   throw HardwareInterfaceException("Cannot create handle. command z pointer is null"); *z = 0.4; }
+    LegPositionHandle() = default;
+    LegPositionHandle(const std::string name_, double* x, double* z)
+     : leg_name(name_), x_(x), z_(z){
+        if(!x_){ throw HardwareInterfaceException("Cannot create handle. command x pointer is null"); }
+        if(!z_){ throw HardwareInterfaceException("Cannot create handle. command z pointer is null"); }
     }
     ~LegPositionHandle(){}
 
-    void setCommand(double x_, double z_){
-        assert(x); *x = x_;
-        assert(z); *z = z_;
+    void setCommand(double x, double z){
+        assert(x_);
+        *x_ = x;
+        *z_ = z;
     }
 
     std::string getName() const { return leg_name; }
-    double getX() const { assert(x); return *x; }
-    double getZ() const { assert(z); return *z; }
+    double getX() const { assert(x_); return *x_; }
+    double getZ() const { assert(z_); return *z_; }
 
-    const double* getXPtr() const { assert(x); return x; }
-    const double* getZPtr() const { assert(z); return z; }
+    const double* getXPtr() const { assert(x_); return x_; }
+    const double* getZPtr() const { assert(z_); return z_; }
 };
 
 class LegPositionInterface : public HardwareResourceManager<LegPositionHandle>{};

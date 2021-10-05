@@ -1,0 +1,10 @@
+<library path="lib/libsimple_leg_controllers">
+
+    <class name="simple_leg_controllers/LegPositionController"
+           type="simple_leg_controllers::LegPositionController"
+           base_class_type="controller_interface::ControllerBase">
+        <description>
+            This controller subscribes target leg position in cartesian space.
+        </description>
+    </class>
+</library>
