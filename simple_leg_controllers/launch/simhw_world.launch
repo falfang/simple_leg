@@ -1,0 +1,14 @@
+<launch>
+    <!-- 下のコメントを解除すればxacroでも読み込める！ -->
+    <!--<param name="robot_description" command="$(find xacro) '$(find trobo_description)/urdf/trobo_sim.xacro'"/ >-->
+    
+    <param name="robot_description" textfile="$(find ros_control_tutorial)/urdf/trobo_sim.urdf"/>
+    
+    <include file="$(find ros_control_tutorial)/launch/simhw_control.launch"/>
+    
+    <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+    
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model mobilerobot"/>
+    
+    <node name="rviz" pkg="rviz" type="rviz" required="true"/>
+</launch>

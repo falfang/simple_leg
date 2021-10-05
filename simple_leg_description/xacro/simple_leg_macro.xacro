@@ -1,0 +1,160 @@
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <!-- Variables: Size of body_link -->
+    <xacro:property name="base_size_x" value="0.1"/>
+    <xacro:property name="base_size_y" value="0.1"/>
+    <xacro:property name="base_size_z" value="0.1"/>
+
+    <!-- Variables: Position of body_link -->
+    <xacro:property name="base_x" value="0.0"/>
+    <xacro:property name="base_y" value="0.0"/>
+    <xacro:property name="base_z" value="1.0"/>
+
+    <xacro:property name="l1" value="0.2"/>
+    <xacro:property name="l2" value="0.2"/>
+
+    <xacro:property name="PI" value="3.14159"/>
+
+
+    <!-- Color settings -->
+    <material name="red">
+        <color rgba="1.0 0.0 0.0 2.0"/>
+    </material>
+    <material name="blue">
+        <color rgba="0.0 0.0 1.0 2.0"/>
+    </material>
+    <material name="white">
+        <color rgba="1.0 1.0 1.0 2.0"/>
+    </material>
+
+    <xacro:macro name="simple_leg_macro" params="parent z_offset">
+        <!-- body_link -->
+        <joint name="base_joint" type="fixed">
+            <parent link="${parent}"/>
+            <child link="body_link"/>
+            <origin rpy="0 0 0" xyz="0 0 ${z_offset}"/>
+        </joint>
+        <link name="body_link">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <box size="${base_size_x} ${base_size_y} ${base_size_z}"/>
+                </geometry>
+                <material name="blue"/>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <box size="${base_size_x} ${base_size_y} ${base_size_z}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="1"/>
+                <inertia ixx="1e-3" ixy="0" ixz="0" iyy="1e-3" iyz="0" izz="1e-3"/>
+            </inertial>
+        </link>
+
+        <!-- Hip_joint & UpperThigh_link -->
+        <joint name="Hip" type="revolute">
+            <parent link="body_link"/>
+            <child link="upperThigh"/>
+            <axis xyz="0 1 0"/>
+
+            <origin rpy="0 0 0" xyz="0 0 0.0"/>
+            <limit effort="1000" lower="${radians(-90)}" upper="${radians(90)}" velocity="30.0"/>
+        </joint>
+        <link name="upperThigh">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 -${l1/2}"/>
+                <geometry>
+                    <box size="0.05 0.05 0.2"/>
+                </geometry>
+                <material name="red"/>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 -${l1/2}"/>
+                <geometry>
+                    <box size="0.05 0.05 ${l1}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="1"/>
+                <inertia ixx="1e-3" ixy="0" ixz="0" iyy="1e-3" iyz="0" izz="1e-3"/>
+            </inertial>
+        </link>
+
+        <!-- Knee_joint & LowerThigh_link -->
+        <joint name="Knee" type="revolute">
+            <parent link="upperThigh"/>
+            <child link="lowerThigh"/>
+            <axis xyz="0 1 0"/>
+            <origin rpy="0 0 0" xyz="0 0 -${l1}"/>
+            <limit effort="1000" lower="${radians(-135)}" upper="${radians(15)}" velocity="30.0"/>
+        </joint>
+        <link name="lowerThigh">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 -${l2/2}"/>
+                <geometry>
+                    <box size="0.05 0.05 0.2"/>
+                </geometry>
+                <material name="red"/>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 -${l2/2}"/>
+                <geometry>
+                    <box size="0.05 0.05 0.2"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="1"/>
+                <inertia ixx="1e-3" ixy="0" ixz="0" iyy="1e-3" iyz="0" izz="1e-3"/>
+            </inertial>
+        </link>
+
+        <!-- Actuator color setting -->
+        <transmission name="Hip_trans"  type="SimpleTransmission">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="Hip">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="Hip_motor">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+        <transmission name="Knee_trans"  type="SimpleTransmission">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="Knee">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="Knee_motor">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+        <gazebo>
+            <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+                <robotNamespace>/MELEW_2L</robotNamespace>
+                <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+            </plugin>
+        </gazebo>
+
+        <!-- Gazebo color setting -->
+        <gazebo reference="body_link">
+            <material>Gazebo/Blue</material>
+        </gazebo>
+
+        <gazebo reference="lowerThigh">
+            <material>Gazebo/Red</material>
+        </gazebo>
+
+        <gazebo reference="upperThigh">
+            <material>Gazebo/Red</material>
+        </gazebo>
+
+        <gazebo reference="Whee_link">
+            <material>Gazebo/White</material>
+        </gazebo>
+    </xacro:macro>
+</robot>

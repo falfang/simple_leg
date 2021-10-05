@@ -1,0 +1,6 @@
+<launch>
+    <!--<param name="robot_description" command="$(find xacro) '$(find trobo_description)/urdf/trobo.xacro'"/ >-->
+    <param name="robot_description" textfile="$(find ros_control_tutorial)/urdf/trobo.urdf"/>
+    <include file="$(find ros_control_tutorial)/launch/realhw_control.launch"/>
+    <node name="rviz" pkg="rviz" type="rviz" required="true"/>
+</launch>
