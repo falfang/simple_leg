@@ -12,6 +12,22 @@
 		"python.analysis.extraPaths": [
 			"/home/irl-14/catkin_ws/devel/lib/python2.7/dist-packages",
 			"/opt/ros/melodic/lib/python2.7/dist-packages"
-		]
+		],
+		"files.associations": {
+			"*.body": "yaml",
+			"*.ipp": "cpp",
+			"*.tcc": "cpp",
+			"deque": "cpp",
+			"forward_list": "cpp",
+			"list": "cpp",
+			"string": "cpp",
+			"unordered_map": "cpp",
+			"unordered_set": "cpp",
+			"vector": "cpp",
+			"hash_map": "cpp",
+			"hash_set": "cpp",
+			"system_error": "cpp",
+			"sstream": "cpp"
+		}
 	}
 }

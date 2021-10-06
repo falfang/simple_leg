@@ -1,0 +1,9 @@
+<library path="lib/libsimple_leg_hw_sim">
+    <class name="simple_leg_hw_sim/SimpleLegHWSim"
+           type="simple_leg_hw_sim::SimpleLegHWSim"
+           base_class_type="gazebo_ros_control::RobotHWSim">
+        <description>
+            RobotHWSim for simple leg
+        </description>
+    </class>
+</library>

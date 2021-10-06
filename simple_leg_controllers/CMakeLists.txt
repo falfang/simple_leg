@@ -15,7 +15,12 @@ find_package(catkin REQUIRED COMPONENTS
   controller_manager
   pluginlib
   simple_leg_msgs
+  angles
+  gazebo_ros_control
+  joint_limits_interface
 )
+
+find_package(gazebo REQUIRED) # Need for build RobotHWSim
 
 
 ###################################
@@ -36,6 +41,9 @@ catkin_package(
     controller_interface
     hardware_interface 
     pluginlib
+    angles
+    gazebo_ros_control
+    joint_limits_interface
 #  DEPENDS system_lib
 )
 
@@ -48,10 +56,11 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${GAZEBO_INCLUDE_DIRS}
 )
 
+# simple_leg_controllers
 add_library(simple_leg_controllers src/leg_position_controller.cpp)
-
 add_dependencies(simple_leg_controllers ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(simple_leg_controllers ${catkin_LIBRARIES})
 

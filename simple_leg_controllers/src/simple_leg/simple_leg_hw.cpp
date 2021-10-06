@@ -13,14 +13,20 @@
 namespace simple_leg{
 // Constructor
 simple_leg::simple_leg()
-{   // joint state interfaceとの連携
-    hardware_interface::JointStateHandle hip_state_handle("Hip", &pos[0], &vel[0], &eff[0]);
+{   
+    jnt_pos_.resize(n_dof_);
+    jnt_vel_.resize(n_dof_);
+    jnt_eff_.resize(n_dof_);
+    jnt_pos_cmd_.resize(n_dof_);
+    
+    // connect with joint_state_interface
+    hardware_interface::JointStateHandle hip_state_handle("Hip", &jnt_pos_[0], &jnt_vel_[0], &jnt_eff_[0]);
     joint_state_interface.registerHandle(hip_state_handle);
-    hardware_interface::JointStateHandle knee_state_handle("Knee", &pos[1], &vel[1], &eff[1]);
+    hardware_interface::JointStateHandle knee_state_handle("Knee", &jnt_pos_[1], &jnt_vel_[1], &jnt_eff_[1]);
     joint_state_interface.registerHandle(knee_state_handle);
     registerInterface(&joint_state_interface);
 
-    // 脚先位置コントローラとの連携
+    // connect with leg_position_interface
     hardware_interface::LegPositionHandle leg_position_handle("FL", &cmd_x, &cmd_z); // getHandle()と名前を合わせること！
     leg_position_interface.registerHandle(leg_position_handle);
     registerInterface(&leg_position_interface);
@@ -29,7 +35,7 @@ simple_leg::simple_leg()
     knee_cmd_pub = nh.advertise<std_msgs::Float64>("knee_command", 1);
 }
 
-// 指定された脚先位置を実現するための逆運動学を計算する
+// calculate Inverse Kinematics for designated position ("cmd_x" & "cmd_z" variable)
 void simple_leg::solve_IK(void){
     double L = std::hypot(cmd_x, cmd_z);
 
@@ -39,8 +45,8 @@ void simple_leg::solve_IK(void){
 
 // 実機ロボットから応答値を受け取る
 void simple_leg::read(ros::Time time, ros::Duration period){
-    pos[0] = 1.0;
-    pos[1] = 2.0;
+    jnt_pos_[0] = 1.0;
+    jnt_pos_[1] = 2.0;
     // 今回は逆運動学計算で求めた結果をjoint_stateで返す
 }
 

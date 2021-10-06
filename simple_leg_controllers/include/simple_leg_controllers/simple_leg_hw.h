@@ -19,6 +19,8 @@ namespace simple_leg{
 
 class simple_leg : public hardware_interface::RobotHW{
 private:
+    const unsigned int n_dof_ = 2;
+
     hardware_interface::LegPositionInterface leg_position_interface;
     hardware_interface::JointStateInterface joint_state_interface;
     double cmd_x, cmd_z;
@@ -26,11 +28,12 @@ private:
     std_msgs::Float64 hip_cmd, knee_cmd;
     ros::Publisher hip_cmd_pub, knee_cmd_pub;
 
-    const double default_x = 0.0;
-    const double default_z = -0.35;
-    double pos[2];
-    double vel[2];
-    double eff[2];
+    std::vector<double> jnt_pos_;
+    std::vector<double> jnt_vel_;
+    std::vector<double> jnt_eff_;
+
+    std::vector<double> jnt_pos_cmd_;
+
     void solve_IK(void);
 
 public:

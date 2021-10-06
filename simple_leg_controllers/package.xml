@@ -23,6 +23,9 @@
   <build_depend>controller_manager</build_depend>
   <build_depend>controller_interface</build_depend>
   <build_depend>pluginlib</build_depend>
+  <build_depend>joint_limits_interface</build_depend>
+  <build_depend>angles</build_depend>
+  <build_depend>gazebo_ros_control</build_depend>
   
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>std_msgs</build_export_depend>
@@ -33,11 +36,15 @@
   <exec_depend>controller_manager</exec_depend>
   <exec_depend>controller_interface</exec_depend>
   <exec_depend>pluginlib</exec_depend>
+  <exec_depend>joint_limits_interface</exec_depend>
+  <exec_depend>angles</exec_depend>
+  <exec_depend>gazebo_ros_control</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
     <!-- Other tools can request additional information be placed here -->
     <controller_interface plugin="${prefix}/plugins.xml"/>
+    <gazebo_ros_control plugin="${prefix}/simple_leg_hw_sim_plugin.xml"/>
   </export>
 </package>

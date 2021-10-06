@@ -1,0 +1,16 @@
+<launch>
+    <rosparam>
+        joint_state_controller:
+            type: joint_state_controller/JointStateController
+            publish_rate: 100
+        
+        leg_position_controller:
+            type: simple_leg_controllers/LegPositionController
+            leg: FL
+    </rosparam>
+
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" args="joint_state_controller leg_position_controller"/>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"/>
+</launch>

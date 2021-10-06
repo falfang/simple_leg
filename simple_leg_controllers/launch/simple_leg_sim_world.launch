@@ -1,0 +1,12 @@
+<launch>
+    <arg name="model" default="$(find simple_leg_description)/xacro/simple_leg.xacro"/>
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)"/>
+    
+    <include file="$(find simple_leg_controllers)/launch/simple_leg_sim_control.launch"/>
+        
+    <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+    
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model simple_leg"/>
+    
+    <node name="rviz" pkg="rviz" type="rviz" required="true"/>
+</launch>

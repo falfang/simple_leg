@@ -9,10 +9,25 @@ int main(int argc, char** argv){
     ros::Rate loop_rate(100);
     ros::Publisher pub = nh.advertise<simple_leg_msgs::leg_command>("/leg_position_controller/command", 1);
 
-    cmd.x = 0.01;
-    cmd.z = -0.3;
+    double x0 = 0.0;
+    double z0 = -0.25;
+
+    // parameters for circle trajectory
+    double freq = 1.0;
+    double radius = 0.1;
+    
+    cmd.x = x0;
+    cmd.z = z0;
+
+    ros::Time t_start = ros::Time::now();
 
     while(ros::ok()){
+        double current_time = (ros::Time::now() - t_start).toSec();
+
+        // move foot along circle trajectory
+        cmd.x = x0 + radius*cos(2*M_PI*freq*current_time - (3*M_PI/2));
+        cmd.z = z0 + radius*sin(2*M_PI*freq*current_time - (3*M_PI/2));
+        
         pub.publish(cmd);
         loop_rate.sleep();
     }
