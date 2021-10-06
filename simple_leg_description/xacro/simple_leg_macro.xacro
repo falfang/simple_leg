@@ -30,10 +30,10 @@
         <!-- body_link -->
         <joint name="base_joint" type="fixed">
             <parent link="${parent}"/>
-            <child link="body_link"/>
+            <child link="base_link"/>
             <origin rpy="0 0 0" xyz="0 0 ${z_offset}"/>
         </joint>
-        <link name="body_link">
+        <link name="base_link">
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0"/>
                 <geometry>
@@ -55,12 +55,12 @@
 
         <!-- Hip_joint & UpperThigh_link -->
         <joint name="Hip" type="revolute">
-            <parent link="body_link"/>
+            <parent link="base_link"/>
             <child link="upperThigh"/>
             <axis xyz="0 1 0"/>
 
             <origin rpy="0 0 0" xyz="0 0 0.0"/>
-            <limit effort="1000" lower="${radians(-90)}" upper="${radians(90)}" velocity="30.0"/>
+            <limit effort="1000" lower="${radians(-180)}" upper="${radians(180)}" velocity="30.0"/>
         </joint>
         <link name="upperThigh">
             <visual>
@@ -88,7 +88,7 @@
             <child link="lowerThigh"/>
             <axis xyz="0 1 0"/>
             <origin rpy="0 0 0" xyz="0 0 -${l1}"/>
-            <limit effort="1000" lower="${radians(-135)}" upper="${radians(15)}" velocity="30.0"/>
+            <limit effort="1000" lower="${radians(-180)}" upper="${radians(180)}" velocity="30.0"/>
         </joint>
         <link name="lowerThigh">
             <visual>
@@ -135,8 +135,10 @@
 
         <gazebo>
             <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-                <robotNamespace>/MELEW_2L</robotNamespace>
+                <!--
                 <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+                -->
+                <robotSimType>simple_leg_hw_sim/SimpleLegHWSim</robotSimType>
             </plugin>
         </gazebo>
 

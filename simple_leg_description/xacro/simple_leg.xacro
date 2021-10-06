@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<robot name="MELEW_2L" xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:include filename="$(find ros_control_tutorial)/xacro/simple_leg_macro.xacro"/>
+<robot name="simple_leg" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find simple_leg_description)/xacro/simple_leg_macro.xacro"/>
 
     <link name="world"/>
     <xacro:simple_leg_macro parent="world" z_offset="1.0"/>
