@@ -107,14 +107,19 @@ void SimpleLegHWSim::writeSim(ros::Time time, ros::Duration period){
     // Enforce joint limits
     jnt_limits_interface_.enforceLimits(period);
     solve_IK();
+    
     for(size_t i=0; i<n_dof_; i++){
         #if GAZEBO_MAJOR_VERSION >= 9
-            sim_joints_[i]->SetPosition(0, joint_position_command_[i], true);
+            sim_joints_[i]->SetPosition(0, joint_position_command_[i]);
+            // This command makes the model destructed
+            // sim_joints_[i]->SetPosition(0, joint_position_command_[i], true);
         #else
             sim_joints_[i]->SetPosition(0, joint_position_command_[i]);
         #endif
     }
-    ROS_INFO_STREAM("hip: " << joint_position_command_[0] << ", knee: " << joint_position_command_[1]);
+    // for debug
+    ROS_INFO_STREAM("cmd_x: " << cmd_x << ", cmd_z: " << cmd_z);
+    // ROS_INFO_STREAM("hip: " << joint_position_command_[0] << ", knee: " << joint_position_command_[1]);
 }
 
 
