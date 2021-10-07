@@ -58,7 +58,6 @@
             <parent link="base_link"/>
             <child link="upperThigh"/>
             <axis xyz="0 1 0"/>
-
             <origin rpy="0 0 0" xyz="0 0 0.0"/>
             <limit effort="1000" lower="${radians(-180)}" upper="${radians(180)}" velocity="30.0"/>
         </joint>
@@ -66,7 +65,7 @@
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 -${l1/2}"/>
                 <geometry>
-                    <box size="0.05 0.05 0.2"/>
+                    <box size="0.05 0.05 ${l1}"/>
                 </geometry>
                 <material name="red"/>
             </visual>
@@ -135,10 +134,9 @@
 
         <gazebo>
             <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-                <!--
-                <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
-                -->
+                <!--<robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>-->
                 <robotSimType>simple_leg_hw_sim/SimpleLegHWSim</robotSimType>
+                
             </plugin>
         </gazebo>
 
@@ -153,10 +151,6 @@
 
         <gazebo reference="upperThigh">
             <material>Gazebo/Red</material>
-        </gazebo>
-
-        <gazebo reference="Whee_link">
-            <material>Gazebo/White</material>
         </gazebo>
     </xacro:macro>
 </robot>

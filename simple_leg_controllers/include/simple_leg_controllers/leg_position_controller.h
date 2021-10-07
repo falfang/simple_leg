@@ -41,7 +41,7 @@ public:
     virtual void stopping(const ros::Time&);
 
     std::string getLegName(void);
-    void enforceWorkspaceLimit(Command&){};
+    void enforceWorkspaceLimit(Command&){}; // ToDo: Create restriction for robot
 };
 
 }
