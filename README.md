@@ -1,3 +1,6 @@
-# このパッケージの目的
-- ros_controlの仕組みを理解する  
-- 独自のros_controllerを作成する
+# Significance of this package
+- To understand "ros_control" and "ros_controller"  
+- To show how to create custom ros_controller
+
+# Example robot in this package
+- 2-DoF leg named "simple_leg"
