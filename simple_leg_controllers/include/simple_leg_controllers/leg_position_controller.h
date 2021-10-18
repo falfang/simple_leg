@@ -45,3 +45,5 @@ public:
 };
 
 }
+
+PLUGINLIB_EXPORT_CLASS(simple_leg_controllers::LegPositionController, controller_interface::ControllerBase)

@@ -60,8 +60,11 @@ include_directories(
 )
 
 # simple_leg_controllers
-add_library(simple_leg_controllers src/leg_position_controller.cpp)
-add_dependencies(simple_leg_controllers ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_library(simple_leg_controllers 
+  src/leg_position_controller.cpp
+  include/simple_leg_controllers/leg_position_controller.h
+)
+#add_dependencies(simple_leg_controllers ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(simple_leg_controllers ${catkin_LIBRARIES})
 
 
