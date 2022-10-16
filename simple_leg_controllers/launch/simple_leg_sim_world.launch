@@ -8,5 +8,5 @@
     
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model simple_leg"/>
     
-    <node name="rviz" pkg="rviz" type="rviz" required="true"/>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find simple_leg_description)/rviz/simple_leg.rviz"/>
 </launch>
