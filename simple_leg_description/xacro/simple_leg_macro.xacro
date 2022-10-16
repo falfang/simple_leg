@@ -17,13 +17,13 @@
 
     <!-- Color settings -->
     <material name="red">
-        <color rgba="1.0 0.0 0.0 2.0"/>
+        <color rgba="1.0 0.0 0.0 1.0"/>
     </material>
     <material name="blue">
-        <color rgba="0.0 0.0 1.0 2.0"/>
+        <color rgba="0.0 0.0 1.0 1.0"/>
     </material>
     <material name="white">
-        <color rgba="1.0 1.0 1.0 2.0"/>
+        <color rgba="1.0 1.0 1.0 1.0"/>
     </material>
 
     <xacro:macro name="simple_leg_macro" params="parent z_offset">
